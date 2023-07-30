@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.username }}<br>
+        {{ form.password }}
+        <p><button class="btnsub" type="submit">Надіслати</button>
+    </form>
+{% endblock %}

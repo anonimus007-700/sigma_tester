@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Реєстрація{% endblock %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.username }}<br>
+        {{ form.password }}<br>
+        {{ form.email }}
+        <p><button class="btnsub" type="submit">Надіслати</button>
+    </form>
+    {% if error %}
+        <p>Введіть інший логін (такий вже існує)</p>
+    {% endif %}
+{% endblock %}

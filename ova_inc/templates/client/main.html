@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Особистий кабінет{% endblock %}
+
+{% block body %}
+    {% if users %}
+        <div id="{{users.id}}">
+            <h1>Ваше і'мя: {{users.username}}</h1>
+            <p>Ваш пароль: {{users.password}}</p>
+            <p>Ваша пошта: {{users.email}}</p>
+        </div>
+        <a href="{% url 'client:logout' %}">Вийти</a>
+    {% else %}
+        <a href="{% url 'client:register' %}">Реєстрація</a>
+        <a href="{% url 'client:login' %}">Увійти</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Особистий кабінет{% endblock %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ test_form.name }}<br><br>
+        {{ question_form.question_text }}<br><br>
+        {{ answer_form.answer_text }}
+        {{ answer_form.istrue }}<br>
+        {{ answer_form.answer_text }}
+        {{ answer_form.istrue }}<br>
+        <p><button class="btnsub" type="submit">Надіслати</button>
+    </form>
+{% endblock %}
