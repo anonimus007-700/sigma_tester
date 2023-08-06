@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}Особистий кабінет{% endblock %}
+{% block title %}Створення тестів{% endblock %}
 
 {% block body %}
     <form method="post">
         {% csrf_token %}
-        {{ test_form.name }}<br><br>
-        {{ question_form.question_text }}<br><br>
-        {{ answer_form.answer_text }}
-        {{ answer_form.istrue }}<br>
-        {{ answer_form.answer_text }}
-        {{ answer_form.istrue }}<br>
-        <p><button class="btnsub" type="submit">Надіслати</button>
+        {{ test_form.as_p }}<br>
+        {{ question_form.0}}<br>
+
+        {% with steps=0 %}
+        {% for i in answer_form %}
+            {{ i.as_p }}
+            {% if forloop.counter|divisibleby:"4" and not forloop.last %}
+                {{forloop.counter // 4}}
+                {{ question_form.forloop.counter }}
+                {% with steps=steps|add:1 %}
+                    {{ steps }}
+                {% endwith %}
+            {% endif %}
+        {% endfor %}
+        {% endwith %}
+
+        {% if user.is_authenticated %}
+            <p><button type="submit">Надіслати</button>
+        {% endif %}
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <p><button type="submit" name="add">Додати поле</button>
     </form>
 {% endblock %}

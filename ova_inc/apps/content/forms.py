@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, Form, TextInput, BooleanField, CharField, formset_factory
 
 from django.contrib.auth.models import User
 from .models import Tests, Question, Answer
@@ -25,17 +25,16 @@ class QuestionForm(ModelForm):
             }),
         }
 
-class AnswerForm(ModelForm):
-    class Meta:
-        model = Answer
-        fields = ['answer_text', 'istrue']
 
-        widgets = {
-            'answer_text': TextInput(attrs={
-                'placeholder': 'Текст відповіді'
-            }),
-            'istrue': TextInput(attrs={
-                'type': 'radio',
-                'value': 'Чи вірно'
-            }),
-        }
+class AnswerForm(Form):
+    answer_text = CharField()
+    is_true = BooleanField(required=False)
+
+
+class Multiform:
+    def __init__(self, answer_fields: int, question_fields: int) -> None:
+        self.answer_fields = answer_fields
+        self.question_fields = question_fields
+
+        self.AnswerFormSet = formset_factory(AnswerForm, extra=self.answer_fields)
+        self.QuestionFormSet = formset_factory(QuestionForm, extra=self.question_fields)
